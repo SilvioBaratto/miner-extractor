@@ -12,8 +12,8 @@ services:
       #    so that /app/manage.py is available.
       - ./extractor_api:/app
       # 2) Also mount your home directory so magic-pdf.json is accessible
-      # - ${HOME}:/home/${USER}
-      - ${USERPROFILE}:/home/user # Windows
+      - ${HOME}:/home/${USER}
+      # - ${USERPROFILE}:/home/user # Windows
     environment:
       PYTHONUNBUFFERED: 1
       PYTHONDONTWRITEBYTECODE: 1
