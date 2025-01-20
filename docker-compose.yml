@@ -1,0 +1,36 @@
+# The `version:` line is no longer needed or recommended by Docker, so we can omit it
+services:
+  web-dev:
+    build:
+      context: .
+      target: development   # Use the "development" stage in Dockerfile
+    container_name: miner_extractor_dev
+    ports:
+      - "5000:5000"
+    volumes:
+      # 1) Mount just the "extractor_api/" folder into /app,
+      #    so that /app/manage.py is available.
+      - ./extractor_api:/app
+      # 2) Also mount your home directory so magic-pdf.json is accessible
+      # - ${HOME}:/home/${USER}
+      - ${USERPROFILE}:/home/user # Windows
+    environment:
+      PYTHONUNBUFFERED: 1
+      PYTHONDONTWRITEBYTECODE: 1
+    # By default, the Dockerfile's dev stage CMD is:
+    #   ["python", "manage.py", "runserver", "0.0.0.0:5000"]
+    # which works because `manage.py` is now at /app/manage.py.
+
+  web-prod:
+    build:
+      context: .
+      target: production    # Use the "production" stage
+    container_name: miner_extractor_prod
+    ports:
+      - "5000:5000"
+    environment:
+      PYTHONUNBUFFERED: 1
+      PYTHONDONTWRITEBYTECODE: 1
+    # By default, the Dockerfile's production CMD is:
+    #   ["gunicorn", "--bind", "0.0.0.0:5000", "extractor_api.api.wsgi:application"]
+    # which references the correct path for wsgi.py
