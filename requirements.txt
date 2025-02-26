@@ -10,3 +10,6 @@ django-cors-headers==4.6.0
 drf_yasg==1.21.8
 python-dotenv==1.0.1
 whitenoise==6.8.2
+fastembed==0.4.2
+qdrant-client==1.12.1
+protobuf==3.19.4
